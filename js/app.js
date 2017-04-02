@@ -11,21 +11,31 @@ var App = {
         var tableauEvents = [];
         // on fait une requête Ajax avec async False
         $.ajax({
-            url: "https://opendata.paris.fr/api/records/1.0/search/?dataset=evenements-a-paris&rows=1000&facet=updated_at&facet=tags&facet=department&facet=region&facet=city&facet=date_start&facet=date_end"
+            url: "https://opendata.paris.fr/api/records/1.0/search/?dataset=evenements-a-paris&rows=10000&facet=updated_at&facet=tags&facet=department&facet=region&facet=city&facet=date_start&facet=date_end&refine.date_start=2017"
             , method: 'GET'
             , async: false
             , beforeSend: function () {
                 console.log("Lancement de la requête");
                 // Todo : Afficher fenêtre modale 'chargement en cours'
+                $("#eventName").text("Chargement en cours.....");
             }
             , success: function (data) {
+                // Je prend la date du jour pour n'enregistrer que les events à venir
+                myDate = Date.now();
+                console.log(myDate);
                 var events = data.records;
                 events.forEach(function (event) {
                     console.log(event);
                     var event = event.fields;
                     var evenement = Object.create(Evenement);
                     evenement.init(event);
-                    tableauEvents.push(evenement);
+                    eventDate = evenement.dateDebut.split("-");
+                    eventDate = eventDate[0] + "/" + eventDate[1] + "/" + eventDate[2];
+                    eventDate = new Date(eventDate).getTime();
+                    console.log(eventDate);
+                    if (eventDate >= myDate) {
+                        tableauEvents.push(evenement);
+                    }
                 });
             }
         });
@@ -81,5 +91,4 @@ function initMap() {
         , imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
     };
     var markerCluster = new MarkerClusterer(map, application.markers, mcOptions);
-    var markerCluster
 }

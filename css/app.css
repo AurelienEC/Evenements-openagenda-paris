@@ -1,3 +1,8 @@
+.row {
+    width: 100%;
+    max-width: 100%;
+}
+
 .carte {
     height: 100%;
     margin: 0px;
@@ -22,8 +27,6 @@
 }
 
 .card {
-    position: absolute;
-    width: 100%;
     top: 0px;
     right: 0px;
     z-index: 100000;
@@ -101,10 +104,14 @@
     top: 0;
     bottom: 0px;
     position: relative;
+    line-height: 100%;
+    background-color: aqua;
 }
 
 h2 {
-    font-size: 1em;
+    font-size: 1.2em;
+    font-weight: bold;
+    text-align: center;
 }
 
 #eventReservation {
@@ -112,7 +119,8 @@ h2 {
 }
 
 @media only screen and (max-width: 40em) {
-    #map {
+    #map,
+    .carte {
         height: 300px;
     }
     .infos {
