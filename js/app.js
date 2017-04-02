@@ -44,12 +44,13 @@ var App = {
                 , title: evenement.title
                 , event: evenement
             });
-            marker.setMap(map);
+            //marker.setMap(map);
             marker.addListener('click', function () {
                 marker.event.setInformationCard();
             });
             tableauMarkers.push(marker);
         });
+        return tableauMarkers;
     }
 };
 
@@ -63,4 +64,8 @@ function initMap() {
     });
     application = Object.create(App);
     application.init();
+    console.log(application.markers);
+    var markerCluster = new MarkerClusterer(map, application.markers, {
+        imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
+    });
 }
