@@ -1,0 +1,122 @@
+.carte {
+    height: 100%;
+    margin: 0px;
+    padding: 0px;
+    position: relative;
+}
+
+.themap {
+    position: absolute;
+    top: 80px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+#eventThumbnail img {
+    max-height: 180px;
+    width: auto;
+    max-width: 100%;
+    display: block;
+    margin: auto;
+}
+
+.card {
+    position: absolute;
+    width: 100%;
+    top: 0px;
+    right: 0px;
+    z-index: 100000;
+}
+
+.content-info {
+    position: relative;
+    overflow-y: scroll;
+    margin-bottom: 45px;
+}
+
+.card,
+.button {
+    border-radius: 0px;
+}
+
+.button.success {
+    color: #fff;
+}
+
+#eventReservation {
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+}
+
+#eventReservation a {
+    display: block;
+    margin: auto;
+}
+
+.infos {
+    margin: 0px;
+    padding: 0px;
+    border-radius: 0px;
+    height: 100%;
+    transform: translateZ(0);
+}
+
+#place,
+#description {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#place {
+    margin-top: 0.5rem;
+}
+
+#eventLieu {
+    margin-bottom: 0.5rem;
+}
+
+#description {
+    text-align: justify;
+    font-size: 0.8rem;
+}
+
+#eventDetails {
+    text-align: justify;
+    font-size: 0.8rem;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#map {
+    min-height: 500px;
+    height: 100%;
+    width: 100%;
+    padding: 0px;
+    margin: 0px;
+    top: 0;
+    bottom: 0px;
+    position: relative;
+}
+
+h2 {
+    font-size: 1em;
+}
+
+#eventReservation {
+    display: none;
+}
+
+@media only screen and (max-width: 40em) {
+    #map {
+        height: 300px;
+    }
+    .infos {
+        position: relative;
+        transform: none;
+    }
+}
