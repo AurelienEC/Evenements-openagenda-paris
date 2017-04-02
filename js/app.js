@@ -4,14 +4,14 @@ var map;
 //var App qui va gérer l'ensemble de l'application
 var App = {
     init: function () {
-        this.evenements = this.getEvenements();
-        this.markers = this.createMarkers(this.evenements);
+        // this.evenements = ;
+        this.markers = this.createMarkers(this.getEvenements());
     }, // Récupéreation des evenements sur l'API de la ville de paris
     getEvenements: function () {
         var tableauEvents = [];
         // on fait une requête Ajax avec async False
         $.ajax({
-            url: "https://opendata.paris.fr/api/records/1.0/search/?dataset=evenements-a-paris&rows=10000&facet=updated_at&facet=tags&facet=department&facet=region&facet=city&facet=date_start&facet=date_end&refine.date_start=2017-06-22"
+            url: "https://opendata.paris.fr/api/records/1.0/search/?dataset=evenements-a-paris&rows=1000&facet=updated_at&facet=tags&facet=department&facet=region&facet=city&facet=date_start&facet=date_end"
             , method: 'GET'
             , async: false
             , beforeSend: function () {
@@ -19,7 +19,6 @@ var App = {
                 // Todo : Afficher fenêtre modale 'chargement en cours'
             }
             , success: function (data) {
-                console.log(data);
                 var events = data.records;
                 events.forEach(function (event) {
                     console.log(event);
@@ -34,6 +33,12 @@ var App = {
     }
     , createMarkers: function (evenements) {
         var tableauMarkers = [];
+        var iw = new google.maps.InfoWindow();
+        var oms = new OverlappingMarkerSpiderfier(map, {
+            markersWontMove: true
+            , markersWontHide: true
+            , basicFormatEvents: true
+        });
         evenements.forEach(function (evenement) {
             var marker = new google.maps.Marker({
                 position: {
@@ -45,9 +50,15 @@ var App = {
                 , event: evenement
             });
             //marker.setMap(map);
-            marker.addListener('click', function () {
+            marker.addListener('spider_click', function () {
+                iw.setContent(marker.event.title);
                 marker.event.setInformationCard();
+                iw.open(map, marker);
+                marker.addListener('click', function () {
+                    marker.event.setInformationCard();
+                });
             });
+            oms.addMarker(marker);
             tableauMarkers.push(marker);
         });
         return tableauMarkers;
@@ -65,7 +76,10 @@ function initMap() {
     application = Object.create(App);
     application.init();
     console.log(application.markers);
-    var markerCluster = new MarkerClusterer(map, application.markers, {
-        imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
-    });
+    var mcOptions = {
+        maxZoom: 15
+        , imagePath: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m'
+    };
+    var markerCluster = new MarkerClusterer(map, application.markers, mcOptions);
+    var markerCluster
 }
